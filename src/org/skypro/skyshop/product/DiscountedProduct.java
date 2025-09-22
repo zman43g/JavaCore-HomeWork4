@@ -23,4 +23,5 @@ public class DiscountedProduct extends Product {
     public int getDiscount() {
         return discount;
     }
+
 }
