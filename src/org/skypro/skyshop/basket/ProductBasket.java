@@ -1,6 +1,9 @@
 package org.skypro.skyshop.basket;
 
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.Arrays;
 
@@ -19,36 +22,44 @@ public class ProductBasket {
                 aux = 1;
                 break;
             }
-
         }
         if (aux == 0) {
             System.out.println("Невозможно добавить продукт");
         }
     }
 
-    public int totalCost() {
+    public int totalPrice() {
         int total = 0;
         for (Product product : products) {
             if (product != null) {
-                total = product.getCost() + total;
+                total = product.getPrice() + total;
             }
         }
         return total;
     }
 
     public void printBasket() {
-        int aux = 0;
+        int aux = 0;//для проверки на наличие товаров в корзине
+        int specialProductsQuantity = 0;
         for (int i = 0; i < products.length; i++) {
-            if (products[i] != null) {
-                System.out.println(products[i].getProductName() + ": " + products[i].getCost());
+            if ((products[i] != null)) {
+                if (products[i].getDiscount() != 0 && products[i].isSpecial()) {
+                    System.out.println(products[i].getProductName() + ": " + products[i].getPrice() + " скидка " + products[i].getDiscount() + "%");
+                    specialProductsQuantity++;
+                } else if (products[i].isSpecial()) {
+                    System.out.println(products[i].getProductName() + ": Фиксированная цена " + products[i].getPrice());
+                    specialProductsQuantity++;
+                } else {
+                    System.out.println(products[i].getProductName() + ": " + products[i].getPrice());
+                }
                 aux = aux + 1;
             }
-
         }
         if (aux != 0) {
-            System.out.println("Итого: " + totalCost());
+            System.out.println("Итого: " + totalPrice());
+            System.out.println("Специальных товаров: " + specialProductsQuantity);
         } else {
-            System.out.println("в корзине пусто");
+            System.out.println("В корзине пусто");
         }
 
     }
