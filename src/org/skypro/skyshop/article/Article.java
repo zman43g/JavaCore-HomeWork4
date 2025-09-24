@@ -29,7 +29,7 @@ public final class Article implements Searchable {
     }
         @Override
     public String getStringRepresentation() {
-        return " Имя " + articleText.toString() + " Тип Searchable объекта ARTICLE";
+        return " Имя " + articleText + " Тип Searchable объекта ARTICLE";
 
     }
 }
