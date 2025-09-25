@@ -36,7 +36,7 @@ public class SearchEngine {
         count++;
     }
 
-    public Searchable bestMatch(String search) throws NullPointerException {
+    public Searchable bestMatch(String search) throws BestResultNotFound {
 
         Searchable bestResults = null;
         int maxInstances = 0;
@@ -61,20 +61,6 @@ public class SearchEngine {
         } else
             return bestResults;
     }
-
-
-
-    /*str = "helloabcdehellonnnnnnhello"
-    substring = "hello"
-    quantity = 0
-    index = 0
-    индексПодстроки = str.indexOf(substring, индекс)
-
-            while(индексПодстроки != -1){
-        количество++;
-        индекс = индексПодстроки + substring.length();
-        индексПодстроки = str.indexOf(substring, индекс)
-        }*/
 
 }
 

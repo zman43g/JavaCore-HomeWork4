@@ -16,7 +16,7 @@ import org.skypro.skyshop.article.Article;
 
 
 public class App {
-    public static void main(String[] args) throws BestResultNotFound {
+    public static void main(String[] args) {
         Product[] product = new Product[5];
         product[0] = new SimpleProduct("Сахар", 80);
         product[1] = new SimpleProduct("Сыр", 600);
@@ -114,6 +114,8 @@ public class App {
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
+
     }
+
 
 }
