@@ -3,28 +3,42 @@ package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ProductBasket {
-    private final Product[] products;
+    private final List<Product> products;
 
     public ProductBasket() {
-        this.products = new Product[5];
+        this.products = new LinkedList<>();
     }
 
     public void addProduct(Product product) {
-        int aux = 0;
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                products[i] = product;
-                aux = 1;
-                break;
+        products.add(product);
+    }
+
+    public List<Product> removeProductFromBasket(String name) {
+        List<Product> removedProducts = new LinkedList<>();
+        Iterator<Product> iterator = products.iterator();
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getProductName().equals(name)) {
+                removedProducts.add(product);
+                iterator.remove();
             }
         }
-        if (aux == 0) {
-            System.out.println("Невозможно добавить продукт");
+        if (!removedProducts.isEmpty()) {
+            for (Product p : removedProducts) {
+                System.out.println("Удален продукт из корзины: " + p.getProductName());
+            }
+        } else {
+            System.out.println("Список удаленных продуктов пуст");
         }
+        return removedProducts;
     }
+
 
     public int totalPrice() {
         int total = 0;
@@ -74,9 +88,8 @@ public class ProductBasket {
     }
 
     public void emptyBasket() {
-        Arrays.fill(products, null);
+        Collections.fill(products, null);
     }
-
 }
 
 
