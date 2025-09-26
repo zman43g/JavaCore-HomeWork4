@@ -1,8 +1,6 @@
 package org.skypro.skyshop.article;
 
-import org.skypro.skyshop.product.Product;
-
-import java.util.Arrays;
+import org.skypro.skyshop.exeptions.BestResultNotFound;
 
 public class SearchEngine {
     private Searchable[] searchables;
@@ -16,9 +14,9 @@ public class SearchEngine {
     public String[] search(String query) {
         String[] searchResults = new String[5];
         int counter = 0;
-        for (int i = 0; i < searchables.length; i++) {
-            if (searchables[i] != null && searchables[i].searchTerm().contains(query)) {
-                searchResults[counter] = searchables[i].getStringRepresentation();
+        for (Searchable searchable : searchables) {
+            if (searchable != null && searchable.searchTerm().contains(query)) {
+                searchResults[counter] = searchable.getStringRepresentation();
                 counter++;
             }
             if (counter == 5) {
@@ -38,6 +36,31 @@ public class SearchEngine {
         count++;
     }
 
-}
+    public Searchable bestMatch(String search) throws BestResultNotFound {
 
+        Searchable bestResults = null;
+        int maxInstances = 0;
+
+        for (Searchable searchable : searchables) {
+            int numberOfInstances = 0;
+            int index = 0;
+            int searchIndex = searchable.searchTerm().indexOf(search, index);
+            while (searchIndex != -1) {
+                numberOfInstances++;
+                index = searchIndex + search.length();
+                searchIndex = searchable.searchTerm().indexOf(search, index);
+                if (numberOfInstances > maxInstances) {
+                    maxInstances = numberOfInstances;
+                    bestResults = searchable;
+
+                }
+            }
+        }
+        if (bestResults == null) {
+            throw new BestResultNotFound("По запросу " + search + " совпадения не найдены");
+        } else
+            return bestResults;
+    }
+
+}
 

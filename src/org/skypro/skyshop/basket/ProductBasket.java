@@ -1,14 +1,12 @@
 package org.skypro.skyshop.basket;
 
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.product.SimpleProduct;
+
 
 import java.util.Arrays;
 
 public class ProductBasket {
-    private Product[] products;
+    private final Product[] products;
 
     public ProductBasket() {
         this.products = new Product[5];
@@ -41,16 +39,16 @@ public class ProductBasket {
     public void printBasket() {
         int aux = 0;//для проверки на наличие товаров в корзине
         int specialProductsQuantity = 0;
-        for (int i = 0; i < products.length; i++) {
-            if ((products[i] != null)) {
-                if (products[i].getDiscount() != 0 && products[i].isSpecial()) {
-                    System.out.println(products[i].getProductName() + ": " + products[i].getPrice() + " скидка " + products[i].getDiscount() + "%");
+        for (Product product : products) {
+            if ((product != null)) {
+                if (product.getDiscount() != 0 && product.isSpecial()) {
+                    System.out.println(product.getProductName() + ": " + product.getPrice() + " скидка " + product.getDiscount() + "%");
                     specialProductsQuantity++;
-                } else if (products[i].isSpecial()) {
-                    System.out.println(products[i].getProductName() + ": Фиксированная цена " + products[i].getPrice());
+                } else if (product.isSpecial()) {
+                    System.out.println(product.getProductName() + ": Фиксированная цена " + product.getPrice());
                     specialProductsQuantity++;
                 } else {
-                    System.out.println(products[i].getProductName() + ": " + products[i].getPrice());
+                    System.out.println(product.getProductName() + ": " + product.getPrice());
                 }
                 aux = aux + 1;
             }
@@ -66,9 +64,10 @@ public class ProductBasket {
 
     public boolean checkInBasket(String productName) {
         boolean checker = false;
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] != null && products[i].getProductName() == productName) {
+        for (Product product : products) {
+            if (product != null && product.getProductName().equals(productName)) {
                 checker = true;
+                break;
             }
         }
         return checker;

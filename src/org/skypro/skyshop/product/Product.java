@@ -6,8 +6,14 @@ public abstract class Product implements Searchable {
     private final String productName;
 
     public Product(String productName) {
-        this.productName = productName;
+        if (productName.isBlank()) {
+            throw new IllegalArgumentException("Название продукта не должно быть пустым");
+
+        } else {
+            this.productName = productName;
+        }
     }
+
     public abstract int getPrice();
 
     public abstract boolean isSpecial();
@@ -26,11 +32,13 @@ public abstract class Product implements Searchable {
 
     @Override
     public String getStringRepresentation() {
-        return " Имя " + productName.toString() + " Тип Searchable объекта PRODUCT ";
+        return " Имя " + productName + " Тип Searchable объекта PRODUCT ";
     }
 
     @Override
     public String contentFound() {
         return productName.getClass().getSimpleName();
     }
+
 }
+
