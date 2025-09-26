@@ -10,9 +10,9 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.article.Article;
 
-
-
-
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class App {
@@ -27,6 +27,7 @@ public class App {
 
         ProductBasket basket1 = new ProductBasket();
 
+
         basket1.addProduct(product[0]);
         basket1.addProduct(product[3]);
         basket1.addProduct(product[1]);
@@ -37,12 +38,23 @@ public class App {
         basket1.printBasket();
         System.out.println("basket1.totalPrice() = " + basket1.totalPrice());
 
+
         System.out.println();
         System.out.println("Наличие продукта в корзине = " + basket1.checkInBasket("Сыр"));
         System.out.println("Наличие продукта в корзине = " + basket1.checkInBasket("Креветки"));
 
-        basket1.emptyBasket();
+        //basket1.emptyBasket();
         basket1.printBasket();
+        System.out.println("----------------");
+
+        List<Product> removedProd;
+        basket1.removeProductFromBasket("Сахар");
+        basket1.printBasket();
+        basket1.removeProductFromBasket("Газировка");
+        basket1.printBasket();
+        System.out.println("----------------");
+
+
         System.out.println("basket1.totalPrice() = " + basket1.totalPrice());
         System.out.println("Наличие продукта в корзине = " + basket1.checkInBasket("Мясо"));
         DiscountedProduct discountedProduct = new DiscountedProduct("Сыр", 100, 50);
@@ -61,35 +73,24 @@ public class App {
         System.out.println("article.contentFound() = " + articles[0].contentFound());
         System.out.println();
 
-        SearchEngine searcher = new SearchEngine(5);
+        SearchEngine searcher = new SearchEngine();
         searcher.add(product[3]);
         searcher.add(product[2]);
         searcher.add(articles[1]);
         searcher.add(articles[2]);
         searcher.add(product[4]);
+        searcher.add(product[0]);
+        searcher.add(articles[0]);
+        System.out.println("--------------");
+
+        searcher.printSearch();
+        System.out.println();
 
 
-        String[] result = searcher.search("ПДД");
-        for (String string : result) {
-            if (string != null) {
-                System.out.println(string);
-            }
-        }
-        System.out.println();
-        result = searcher.search("о");
-        for (String string : result) {
-            if (string != null) {
-                System.out.println(string);
-            }
-        }
-        System.out.println();
-        result = searcher.search("Овсянка");
-        for (String string : result) {
-            if (string != null) {
-                System.out.println(string);
-            }
-        }
-        System.out.println();
+        searcher.search("Суп");
+        searcher.search("Соль");
+
+        System.out.println("---------------");
 
         try {
             product[4] = new DiscountedProduct("Просроченное сало", 200, 400);
@@ -114,7 +115,6 @@ public class App {
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
-
     }
 
 
