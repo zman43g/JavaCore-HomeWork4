@@ -2,6 +2,7 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.SearchEngine;
+import org.skypro.skyshop.article.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.exeptions.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
@@ -10,9 +11,7 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.article.Article;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 
 public class App {
@@ -24,39 +23,37 @@ public class App {
         product[3] = new SimpleProduct("Соль", 20);
         product[4] = new DiscountedProduct("Овсянка", 200, 40);
 
-
         ProductBasket basket1 = new ProductBasket();
 
-
         basket1.addProduct(product[0]);
-        basket1.addProduct(product[3]);
+        basket1.addProduct(product[0]);
         basket1.addProduct(product[1]);
         basket1.addProduct(product[2]);
         basket1.addProduct(product[4]);
 
-
         basket1.printBasket();
         System.out.println("basket1.totalPrice() = " + basket1.totalPrice());
-
 
         System.out.println();
         System.out.println("Наличие продукта в корзине = " + basket1.checkInBasket("Сыр"));
         System.out.println("Наличие продукта в корзине = " + basket1.checkInBasket("Креветки"));
 
-        //basket1.emptyBasket();
+
         basket1.printBasket();
         System.out.println("----------------");
 
-        List<Product> removedProd;
+
         basket1.removeProductFromBasket("Сахар");
         basket1.printBasket();
         basket1.removeProductFromBasket("Газировка");
+        basket1.printBasket();
+        basket1.emptyBasket();
         basket1.printBasket();
         System.out.println("----------------");
 
 
         System.out.println("basket1.totalPrice() = " + basket1.totalPrice());
-        System.out.println("Наличие продукта в корзине = " + basket1.checkInBasket("Мясо"));
+        System.out.println("Наличие продукта в корзине = " + basket1.checkInBasket("Сыр"));
         DiscountedProduct discountedProduct = new DiscountedProduct("Сыр", 100, 50);
         System.out.println("Discounted = " + discountedProduct.getPrice());
         System.out.println();
@@ -86,9 +83,9 @@ public class App {
         searcher.printSearch();
         System.out.println();
 
-
-        searcher.search("Суп");
-        searcher.search("Соль");
+        searcher.printSearchables(searcher.search("сон"));
+        searcher.printSearchables(searcher.search("сок"));
+        searcher.printSearchables(searcher.search("соль"));
 
         System.out.println("---------------");
 
