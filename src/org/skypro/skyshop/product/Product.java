@@ -26,7 +26,7 @@ public abstract class Product implements Searchable {
 
     @Override
     public String searchTerm() {
-        return productName + " PRODUCT";
+        return productName + " PRODUCT ";
 
     }
 
@@ -38,6 +38,11 @@ public abstract class Product implements Searchable {
     @Override
     public String contentFound() {
         return productName.getClass().getSimpleName();
+    }
+
+    @Override
+    public String toString() {
+        return productName;
     }
 
 }

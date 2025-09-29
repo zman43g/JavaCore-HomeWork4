@@ -4,6 +4,8 @@ import org.skypro.skyshop.exeptions.BestResultNotFound;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SearchEngine {
     private final List<Searchable> searchables;
@@ -12,22 +14,32 @@ public class SearchEngine {
         this.searchables = new ArrayList<>();
     }
 
-
-    public List<Searchable> search(String query) {
-        List<Searchable> searchResults = new ArrayList<>();
+    public Map<String, Searchable> search(String query) {
+        if (query == null) {
+            throw new IllegalArgumentException("Query can't be null");
+        }
+        Map<String, Searchable> searchResults = new TreeMap<>();
+        if (query.isBlank()) {
+            return searchResults;
+        }
         for (Searchable searchable : searchables) {
-            if (searchable != null && searchable.searchTerm().contains(query)) {
-                searchResults.add(searchable);
+            if (searchable.searchTerm().toLowerCase().contains(query.toLowerCase())) {
+                searchResults.put(searchable.searchTerm(), searchable);
             }
         }
+
+        return searchResults;
+    }
+
+    public void printSearchables(Map<String, Searchable> searchResults) {
         if (!searchResults.isEmpty()) {
-            for (Searchable searchResult : searchResults) {
-                System.out.println("Результат поиска по запросу " + query + " :" + searchResult.getStringRepresentation());
+            System.out.println("Результаты поиска по запросу: ");
+            for (Searchable searchable : searchResults.values()) {
+                System.out.println(searchable);
             }
         } else {
-            System.out.println("По запросу " + query + " ничего не найдено!");
+            System.out.println("Совпадения не найдены");
         }
-        return searchResults;
     }
 
     public void add(Searchable newAdd) {
