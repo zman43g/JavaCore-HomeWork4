@@ -4,4 +4,5 @@ public interface Searchable {
     String searchTerm();
     String contentFound();
     String getStringRepresentation();
+    String getNameOfSearchable();
 }
