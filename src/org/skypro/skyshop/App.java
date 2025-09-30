@@ -2,7 +2,6 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.SearchEngine;
-import org.skypro.skyshop.article.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.exeptions.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
@@ -10,8 +9,6 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.article.Article;
-
-import java.util.Map;
 
 
 public class App {
@@ -61,7 +58,7 @@ public class App {
         Article[] articles = new Article[5];
         articles[0] = new Article("О вреде соли", "Соль очень вредна в больших количествах!");
         articles[1] = new Article("О ПДД", "Необходимо соблюдать ПДД!");
-        articles[2] = new Article("О пользе сна", "Крепкий сон полезен для здоровья.");
+        articles[2] = new Article("О пользе крепкого сна", "Крепкий сон полезен для здоровья.");
 
         System.out.println("article.searchTerm() = " + articles[0].searchTerm());
         System.out.println("article.getStringRepresentation() = " + articles[0].getStringRepresentation());
@@ -83,9 +80,10 @@ public class App {
         searcher.printSearch();
         System.out.println();
 
-        searcher.printSearchables(searcher.search("сон"));
-        searcher.printSearchables(searcher.search("сок"));
-        searcher.printSearchables(searcher.search("соль"));
+        System.out.println("searcher.search = " + searcher.search("соль"));
+        System.out.println("searcher.search = " + searcher.search("о"));
+        searcher.search("Кот");
+
 
         System.out.println("---------------");
 

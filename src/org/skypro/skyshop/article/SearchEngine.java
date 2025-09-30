@@ -2,36 +2,50 @@ package org.skypro.skyshop.article;
 
 import org.skypro.skyshop.exeptions.BestResultNotFound;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
-    private final List<Searchable> searchables;
+    private final Set<Searchable> searchables;
 
     public SearchEngine() {
-        this.searchables = new ArrayList<>();
+        this.searchables = new HashSet<>();
     }
 
-    public Map<String, Searchable> search(String query) {
+    public Set<Searchable> search(String query) {
         if (query == null) {
             throw new IllegalArgumentException("Query can't be null");
         }
-        Map<String, Searchable> searchResults = new TreeMap<>();
+        Set<Searchable> searchResults = new TreeSet<>(new ReverseSearchableComparator());
         if (query.isBlank()) {
             return searchResults;
         }
         for (Searchable searchable : searchables) {
             if (searchable.searchTerm().toLowerCase().contains(query.toLowerCase())) {
-                searchResults.put(searchable.searchTerm(), searchable);
+                searchResults.add(searchable);
             }
         }
-
-        return searchResults;
+        if (searchResults.isEmpty()) {
+            System.out.println("По запросу "+ query + " совпадений не найдено");
+            return searchResults;
+        }
+        else {return searchResults;}
     }
 
-    public void printSearchables(Map<String, Searchable> searchResults) {
+
+    public static class ReverseSearchableComparator implements Comparator<Searchable> {
+        public int compare(Searchable o1, Searchable o2) {
+            if (o1.getNameOfSearchable().length() > o2.getNameOfSearchable().length()) {
+                return -1;
+            } else if (o1.getNameOfSearchable().length() < o2.getNameOfSearchable().length()) {
+                return 1;
+            } else {
+                return o1.getNameOfSearchable().compareTo(o2.getNameOfSearchable());
+            }
+        }
+    }
+
+
+  /*  public void printSearchables(Set<Searchable> searchResults) {
         if (!searchResults.isEmpty()) {
             System.out.println("Результаты поиска по запросу: ");
             for (Searchable searchable : searchResults.values()) {
@@ -40,7 +54,7 @@ public class SearchEngine {
         } else {
             System.out.println("Совпадения не найдены");
         }
-    }
+    }*/
 
     public void add(Searchable newAdd) {
         searchables.add(newAdd);
