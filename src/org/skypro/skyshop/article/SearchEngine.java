@@ -3,6 +3,7 @@ package org.skypro.skyshop.article;
 import org.skypro.skyshop.exeptions.BestResultNotFound;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private final Set<Searchable> searchables;
@@ -11,7 +12,7 @@ public class SearchEngine {
         this.searchables = new HashSet<>();
     }
 
-    public Set<Searchable> search(String query) {
+    /*public Set<Searchable> search(String query) {
         if (query == null) {
             throw new IllegalArgumentException("Query can't be null");
         }
@@ -25,10 +26,23 @@ public class SearchEngine {
             }
         }
         if (searchResults.isEmpty()) {
-            System.out.println("По запросу "+ query + " совпадений не найдено");
+            System.out.println("По запросу " + query + " совпадений не найдено");
+            return searchResults;
+        } else {
             return searchResults;
         }
-        else {return searchResults;}
+    }*/
+
+    public Set<Searchable> search(String query) {
+        Set<Searchable> searchResult = searchables.stream()
+                .filter(i -> i.searchTerm().toLowerCase().contains(query.toLowerCase()))
+                .limit(5)
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new ReverseSearchableComparator())));
+        if (searchResult.isEmpty()) {
+            System.out.println("По запросу " + query + " ничего не найдено!");
+        }
+
+        return searchResult;
     }
 
 

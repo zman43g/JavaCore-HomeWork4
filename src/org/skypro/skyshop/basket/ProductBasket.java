@@ -3,7 +3,6 @@ package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 
 
-
 import java.util.*;
 
 public class ProductBasket {
@@ -13,7 +12,6 @@ public class ProductBasket {
     public ProductBasket() {
         this.products = new HashMap<>();
     }
-
 
     public void addProduct(Product product) {
         if (product == null) {
@@ -38,7 +36,6 @@ public class ProductBasket {
                 }
             }
 
-
         }
         if (counter == 0) {
             System.out.println("Продукт с именем " + name + " в корзине не найден");
@@ -46,18 +43,11 @@ public class ProductBasket {
         return removedProducts;
     }
 
-
     public int totalPrice() {
-        int total = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                total = total + product.getPrice();
-            }
-        }
-        return total;
+        return products.values().stream().flatMap(Collection::stream).mapToInt(Product::getPrice).sum();
     }
 
-
+/*
     public void printBasket() {
         int aux = 0;//для проверки на наличие товаров в корзине
         int specialProductsQuantity = 0;
@@ -83,6 +73,18 @@ public class ProductBasket {
         } else {
             System.out.println("В корзине пусто");
         }
+    }*/
+
+    public void printBasket() {
+        if (totalPrice() == 0) {
+            System.out.println("В корзине пусто");
+        } else {
+            products.values().stream().flatMap(Collection::stream).forEach(System.out::println);
+            long specials = products.values().stream().flatMap(Collection::stream).filter(Product::isSpecial).count();
+            System.out.println("Итого: " + totalPrice());
+            System.out.println("Специальных товаров: " + specials);
+        }
+
     }
 
 

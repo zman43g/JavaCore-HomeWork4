@@ -37,8 +37,7 @@ public class App {
 
 
         basket1.printBasket();
-        System.out.println("----------------");
-
+        System.out.println("----------------++");
 
         basket1.removeProductFromBasket("Сахар");
         basket1.printBasket();
@@ -83,7 +82,6 @@ public class App {
         System.out.println("searcher.search = " + searcher.search("соль"));
         System.out.println("searcher.search = " + searcher.search("о"));
         searcher.search("Кот");
-
 
         System.out.println("---------------");
 
